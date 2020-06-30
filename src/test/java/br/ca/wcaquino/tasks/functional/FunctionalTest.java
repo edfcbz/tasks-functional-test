@@ -13,11 +13,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class FunctionalTest {
-	
+	private WebDriver driver;
+		
 	public WebDriver acessarAplicacao() throws MalformedURLException {
-		
-		WebDriver driver = null;
-		
 		try {
 			DesiredCapabilities browser = DesiredCapabilities.chrome();
 			
@@ -28,7 +26,7 @@ public class FunctionalTest {
 			return driver;
 			
 		} catch (Exception e) {
-			System.out.println("N�o inicializou o driver");
+			System.out.println("Nao inicializou o driver");
 			return driver;
 		}
 		
