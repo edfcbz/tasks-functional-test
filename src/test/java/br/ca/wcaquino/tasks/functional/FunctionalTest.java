@@ -21,14 +21,14 @@ public class FunctionalTest {
 		try {
 			DesiredCapabilities browser = DesiredCapabilities.chrome();
 			
-			//WebDriver driver = new ChromeDriver();
+			//driver = new ChromeDriver();
 			driver = new RemoteWebDriver(new URL("http://192.168.99.100:4444/wd/hub"), browser);
 			driver.navigate().to("http://localhost:8001/tasks");
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			return driver;
 			
 		} catch (Exception e) {
-			System.out.println("Não inicializou o driver");
+			System.out.println("Nï¿½o inicializou o driver");
 			return driver;
 		}
 		
@@ -41,10 +41,10 @@ public class FunctionalTest {
 		
 		try {
 			
-			//Clicar no botão para adicionar nova tarefa
+			//Clicar no botï¿½o para adicionar nova tarefa
 			driver.findElement(By.id("addTodo")).click();
 			
-			//Preencher o campo descrição
+			//Preencher o campo descriï¿½ï¿½o
 			driver.findElement(By.id("task")).sendKeys("Descricao automatizada atraves do hub");
 			
 			//Preencher o campo data
@@ -71,10 +71,10 @@ public class FunctionalTest {
 		
 		try {
 			
-			//Clicar no botão para adicionar nova tarefa
+			//Clicar no botï¿½o para adicionar nova tarefa
 			driver.findElement(By.id("addTodo")).click();
 			
-			//Preencher o campo descrição
+			//Preencher o campo descriï¿½ï¿½o
 			//driver.findElement(By.id("task")).sendKeys("Descricao automatizada");
 			
 			//Preencher o campo data
@@ -100,10 +100,10 @@ public class FunctionalTest {
 		try {
 
 			
-			//Clicar no botão para adicionar nova tarefa
+			//Clicar no botï¿½o para adicionar nova tarefa
 			driver.findElement(By.id("addTodo")).click();
 			
-			//Preencher o campo descrição
+			//Preencher o campo descriï¿½ï¿½o
 			driver.findElement(By.id("task")).sendKeys("Descricao automatizada");
 			
 			//Preencher o campo data
