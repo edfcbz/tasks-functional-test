@@ -1,5 +1,7 @@
 package br.ca.wcaquino.tasks.functional;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -7,19 +9,33 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class FunctionalTest {
-
 	
-	public WebDriver acessarAplicacao() {
-		WebDriver driver = new ChromeDriver();
-		driver.navigate().to("http://localhost:8001/tasks");
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		return driver;
+	public WebDriver acessarAplicacao() throws MalformedURLException {
+		
+		WebDriver driver = null;
+		
+		try {
+			DesiredCapabilities browser = DesiredCapabilities.chrome();
+			
+			//WebDriver driver = new ChromeDriver();
+			driver = new RemoteWebDriver(new URL("http://192.168.99.100:4444/wd/hub"), browser);
+			driver.navigate().to("http://localhost:8001/tasks");
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			return driver;
+			
+		} catch (Exception e) {
+			System.out.println("Não inicializou o driver");
+			return driver;
+		}
+		
 	}	
 	
 	@Test
-	public void deveSalvarTarefaComSucesso() {
+	public void deveSalvarTarefaComSucesso() throws MalformedURLException {
 		
 		WebDriver driver = acessarAplicacao();
 		
@@ -29,7 +45,7 @@ public class FunctionalTest {
 			driver.findElement(By.id("addTodo")).click();
 			
 			//Preencher o campo descrição
-			driver.findElement(By.id("task")).sendKeys("Descricao automatizada");
+			driver.findElement(By.id("task")).sendKeys("Descricao automatizada atraves do hub");
 			
 			//Preencher o campo data
 			driver.findElement(By.id("dueDate")).sendKeys("10/10/2100");
@@ -40,21 +56,20 @@ public class FunctionalTest {
 			//Verificar mensagem de sucesso.
 			String Mensagem = driver.findElement(By.id("message")).getText().toString();
 			
-			Assert.assertEquals("Success!", Mensagem);
+			System.out.println("MENSAGEM: "+Mensagem);
+			Assert.assertEquals("Sucess!", Mensagem);
+
 		} finally {
-			driver.quit();	
+			//driver.quit();	
 		}
 		
 	}
 	
 	@Test
-	public void naoDeveSalvarTarefaSemNome() {
+	public void naoDeveSalvarTarefaSemNome() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		
 		try {
-			
-			driver.navigate().to("http://localhost:8001/tasks");
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			
 			//Clicar no botão para adicionar nova tarefa
 			driver.findElement(By.id("addTodo")).click();
@@ -80,11 +95,10 @@ public class FunctionalTest {
 	
 	
 	@Test
-	public void naoDeveSalvarTarefaComDataPassada() {
+	public void naoDeveSalvarTarefaComDataPassada() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
-			driver.navigate().to("http://localhost:8001/tasks");
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
 			
 			//Clicar no botão para adicionar nova tarefa
 			driver.findElement(By.id("addTodo")).click();
