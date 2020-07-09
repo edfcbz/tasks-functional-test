@@ -19,8 +19,8 @@ public class FunctionalTest {
 		try {
 			DesiredCapabilities browser = DesiredCapabilities.chrome();
 			
-			//driver = new ChromeDriver();
-			driver = new RemoteWebDriver(new URL("http://192.168.99.100:4444/wd/hub"), browser);
+			driver = new ChromeDriver();
+			//driver = new RemoteWebDriver(new URL("http://192.168.99.100:4444/wd/hub"), browser);
 			driver.navigate().to("http://localhost:8001/tasks");
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			return driver;
@@ -39,7 +39,7 @@ public class FunctionalTest {
 		
 		try {
 			
-			//Clicar no bot�o para adicionar nova tarefa
+			//Clicar no botão de adicionar tarefa
 			driver.findElement(By.id("addTodo")).click();
 			
 			//Preencher o campo descri��o
@@ -53,15 +53,43 @@ public class FunctionalTest {
 			
 			//Verificar mensagem de sucesso.
 			String Mensagem = driver.findElement(By.id("message")).getText().toString();
-			
-			System.out.println("MENSAGEM: "+Mensagem);
-			Assert.assertEquals("Sucess!", Mensagem);
+
+			Assert.assertEquals("Success!", Mensagem);
 
 		} finally {
-			//driver.quit();	
+			driver.quit();	
 		}
 		
 	}
+
+	
+	@Test
+	public void naoDeveSalvarTarefaSemData() throws MalformedURLException {
+		
+		WebDriver driver = acessarAplicacao();
+		
+		try {
+			
+			//Clicar no botão de adicionar tarefa
+			driver.findElement(By.id("addTodo")).click();
+			
+			//Preencher o campo descri��o
+			driver.findElement(By.id("task")).sendKeys("Descricao automatizada atraves do hub");
+			
+			//clicar em salvar
+			driver.findElement(By.id("saveButton")).click();
+			
+			//Verificar mensagem de sucesso.
+			String Mensagem = driver.findElement(By.id("message")).getText().toString();
+
+			Assert.assertEquals("Fill the due date", Mensagem);
+
+		} finally {
+			driver.quit();	
+		}
+		
+	}
+	
 	
 	@Test
 	public void naoDeveSalvarTarefaSemNome() throws MalformedURLException {
@@ -71,9 +99,6 @@ public class FunctionalTest {
 			
 			//Clicar no bot�o para adicionar nova tarefa
 			driver.findElement(By.id("addTodo")).click();
-			
-			//Preencher o campo descri��o
-			//driver.findElement(By.id("task")).sendKeys("Descricao automatizada");
 			
 			//Preencher o campo data
 			driver.findElement(By.id("dueDate")).sendKeys("10/10/2100");
@@ -90,6 +115,8 @@ public class FunctionalTest {
 		}
 		
 	}	
+	
+	
 	
 	
 	@Test
