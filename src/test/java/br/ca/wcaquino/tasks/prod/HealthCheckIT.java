@@ -23,8 +23,11 @@ public class HealthCheckIT {
 			driver = new RemoteWebDriver(new URL("http://192.168.99.100:4444/wd/hub"), browser);
 			driver.navigate().to("http://192.168.99.100:9999/tasks");
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			
 			String version = driver.findElement(By.id("version")).getText();
+			System.out.println(version);
 			assertTrue(version.startsWith("build"));
+			
 		} finally {
 			driver.quit();
 		}
