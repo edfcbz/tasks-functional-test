@@ -33,7 +33,7 @@ public class FunctionalTest {
 		
 		try {
 			driver.findElement(By.id("addTodo")).click();
-			driver.findElement(By.id("task")).sendKeys("Inserindo através do teste funcional JUnit");
+			driver.findElement(By.id("task")).sendKeys("Inserindo através do teste funcional JUnit "+ Math.random());
 			driver.findElement(By.id("dueDate")).sendKeys("10/10/2100");
 			driver.findElement(By.id("saveButton")).click();
 			String Mensagem = driver.findElement(By.id("message")).getText().toString();
@@ -55,7 +55,7 @@ public class FunctionalTest {
 			driver.findElement(By.id("addTodo")).click();
 			
 			//Preencher o campo descri��o
-			driver.findElement(By.id("task")).sendKeys("Descricao automatizada atraves do hub");
+			driver.findElement(By.id("task")).sendKeys("Descricao automatizada atraves do hub ");
 			
 			//clicar em salvar
 			driver.findElement(By.id("saveButton")).click();
