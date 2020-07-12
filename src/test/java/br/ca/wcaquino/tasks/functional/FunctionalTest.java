@@ -20,20 +20,20 @@ public class FunctionalTest {
 			//WebDriver driver = new ChromeDriver();
 			DesiredCapabilities browser = DesiredCapabilities.chrome();
 			WebDriver driver = new RemoteWebDriver(new URL("http://192.168.99.100:4444/wd/hub"), browser);
-			driver.navigate().to("http://192.168.0.105:8001/tasks");
+			driver.navigate().to("http://192.168.99.100:8001/tasks");
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			return driver;
 		
 	}	
 	
 	@Test
-	public void deveSalvarTarefaComSucesso() throws MalformedURLException {
+	public void deveSalvarTarefaComSucesso() throws MalformedURLException, InterruptedException {
 		
 		WebDriver driver = acessarAplicacao();
 		
 		try {
 			driver.findElement(By.id("addTodo")).click();
-			driver.findElement(By.id("task")).sendKeys("Inserindo através do teste funcional JUnit "+ Math.random());
+			driver.findElement(By.id("task")).sendKeys("AMBIENTE TESTE: Inserindo através do teste funcional JUnit "+ Math.random());
 			driver.findElement(By.id("dueDate")).sendKeys("10/10/2100");
 			driver.findElement(By.id("saveButton")).click();
 			String Mensagem = driver.findElement(By.id("message")).getText().toString();
@@ -50,21 +50,11 @@ public class FunctionalTest {
 		WebDriver driver = acessarAplicacao();
 		
 		try {
-			
-			//Clicar no botão de adicionar tarefa
 			driver.findElement(By.id("addTodo")).click();
-			
-			//Preencher o campo descri��o
 			driver.findElement(By.id("task")).sendKeys("Descricao automatizada atraves do hub ");
-			
-			//clicar em salvar
 			driver.findElement(By.id("saveButton")).click();
-			
-			//Verificar mensagem de sucesso.
 			String Mensagem = driver.findElement(By.id("message")).getText().toString();
-
 			Assert.assertEquals("Fill the due date", Mensagem);
-
 		} finally {
 			driver.quit();	
 		}
@@ -77,19 +67,10 @@ public class FunctionalTest {
 		WebDriver driver = acessarAplicacao();
 		
 		try {
-			
-			//Clicar no bot�o para adicionar nova tarefa
 			driver.findElement(By.id("addTodo")).click();
-			
-			//Preencher o campo data
 			driver.findElement(By.id("dueDate")).sendKeys("10/10/2100");
-			
-			//clicar em salvar
 			driver.findElement(By.id("saveButton")).click();
-			
-			//Verificar mensagem de sucesso.
 			String Mensagem = driver.findElement(By.id("message")).getText().toString();
-			
 			Assert.assertEquals("Fill the task description", Mensagem);
 		} finally {
 			driver.quit();	
@@ -104,25 +85,12 @@ public class FunctionalTest {
 	public void naoDeveSalvarTarefaComDataPassada() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
-
-			
-			//Clicar no bot�o para adicionar nova tarefa
 			driver.findElement(By.id("addTodo")).click();
-			
-			//Preencher o campo descri��o
 			driver.findElement(By.id("task")).sendKeys("Descricao automatizada");
-			
-			//Preencher o campo data
 			driver.findElement(By.id("dueDate")).sendKeys("10/10/2000");
-			
-			//clicar em salvar
 			driver.findElement(By.id("saveButton")).click();
-			
-			//Verificar mensagem de sucesso.
 			String Mensagem = driver.findElement(By.id("message")).getText().toString();
-			
 			Assert.assertEquals("Due date must not be in past", Mensagem);
-			
 		} finally {
 			driver.quit();
 		}
